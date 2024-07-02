@@ -1,5 +1,6 @@
 import os
 import shutil
+import uuid
 import sys
 import configparser
 import logging
@@ -52,11 +53,14 @@ class OrganizeTakeout:
                 target_folder = os.path.join(destination_folder, str(year), month, day)
             else:
                 target_folder = os.path.join(destination_folder, "undated")
-            
+
+            extension = os.path.splitext(file_path)[1]  # Capture the file extension
+            new_filenpath = f"{uuid.uuid4()}{extension}"  # Create a new filename with UUID
+
             if not os.path.exists(target_folder):
                 os.makedirs(target_folder)
-            shutil.move(file_path, os.path.join(target_folder, os.path.basename(file_path)))
-            logging.info(f"Moved {file_path} to {target_folder}")
+            shutil.move(file_path, os.path.join(target_folder, os.path.basename(new_filenpath)))
+            logging.info(f"Moved {file_path} to {target_folder} {new_filenpath}")
         except Exception as e:
             logging.error(f"Error processing file {file_path}: {e}")
 
