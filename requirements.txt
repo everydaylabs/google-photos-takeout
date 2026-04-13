@@ -1,2 +1,2 @@
 PyExifTool==0.5.6
-pytest==8.2.2
+pytest==9.0.3
