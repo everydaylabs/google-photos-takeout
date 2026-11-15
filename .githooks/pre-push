@@ -1,0 +1,11 @@
+#!/bin/sh
+# Replaces the old Python CI workflow. Enable once per clone: git config core.hooksPath .githooks
+# Needs: pip install flake8 pytest.  Skip in an emergency: git push --no-verify
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+if python3 -m flake8 --version >/dev/null 2>&1; then
+  python3 -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+else echo "WARNING: flake8 not installed, skipping lint (pip install flake8)"; fi
+if python3 -m pytest --version >/dev/null 2>&1; then
+  python3 -m pytest
+else echo "WARNING: pytest not installed, skipping tests (pip install pytest)"; fi
